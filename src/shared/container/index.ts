@@ -12,6 +12,9 @@ import PasswordRecoveryTokensRepository from '@modules/users/infra/typeorm/repos
 import ICarsRepository from '@modules/cars/repositories/ICarsRepository';
 import CarsRepository from '@modules/cars/infra/typeorm/repositories/CarsRepository';
 
+import ISpecificationsRepository from '@modules/cars/repositories/ISpecificationsRepository';
+import SpecificationsRepository from '@modules/cars/infra/typeorm/repositories/SpecificationsRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -23,3 +26,8 @@ container.registerSingleton<IPasswordRecoveryTokensRepository>(
 );
 
 container.registerSingleton<ICarsRepository>('CarsRepository', CarsRepository);
+
+container.registerSingleton<ISpecificationsRepository>(
+  'SpecificationsRepository',
+  SpecificationsRepository,
+);
