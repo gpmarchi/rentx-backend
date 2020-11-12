@@ -5,7 +5,13 @@ import CreateCarService from '@modules/cars/services/CreateCarService';
 
 export default class CarsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, brand, model, daily_rent_value } = request.body;
+    const {
+      name,
+      brand,
+      model,
+      daily_rent_value,
+      specifications,
+    } = request.body;
 
     const createCar = container.resolve(CreateCarService);
 
@@ -14,6 +20,7 @@ export default class CarsController {
       brand,
       model,
       daily_rent_value,
+      specifications,
     });
 
     return response.json(car);

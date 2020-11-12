@@ -1,6 +1,7 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository, getRepository, In } from 'typeorm';
 
 import ICreateSpecificationDTO from '@modules/cars/dtos/ICreateSpecificationDTO';
+import IFindSpecificationDTO from '@modules/cars/dtos/IFindSpecificationDTO';
 import ISpecificationsRepository from '@modules/cars/repositories/ISpecificationsRepository';
 import Specification from '../entities/Specification';
 
@@ -25,6 +26,20 @@ class SpecificationsRepository implements ISpecificationsRepository {
     const specification = await this.ormRepository.findOne({ where: { name } });
 
     return specification;
+  }
+
+  public async findAllById(
+    specifications: IFindSpecificationDTO[],
+  ): Promise<Specification[]> {
+    const specificationIds = specifications.map(
+      specification => specification.id,
+    );
+
+    const foundSpecifications = await this.ormRepository.find({
+      where: { id: In(specificationIds) },
+    });
+
+    return foundSpecifications;
   }
 }
 

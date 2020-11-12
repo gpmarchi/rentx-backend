@@ -11,8 +11,20 @@ class CarsRepository implements ICarsRepository {
     this.ormRepository = getRepository(Car);
   }
 
-  public async create(carData: ICreateCarDTO): Promise<Car> {
-    const car = this.ormRepository.create(carData);
+  public async create({
+    name,
+    brand,
+    model,
+    daily_rent_value,
+    specifications,
+  }: ICreateCarDTO): Promise<Car> {
+    const car = this.ormRepository.create({
+      name,
+      brand,
+      model,
+      daily_rent_value,
+      specifications,
+    });
 
     await this.ormRepository.save(car);
 

@@ -4,10 +4,13 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
+import CarSpecification from './CarSpecification';
+
 @Entity('specifications')
-class Car {
+class Specification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,6 +23,15 @@ class Car {
   @Column()
   unit: string;
 
+  @OneToMany(
+    () => CarSpecification,
+    carSpecification => carSpecification.specification,
+    {
+      cascade: true,
+    },
+  )
+  cars: CarSpecification[];
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -27,4 +39,4 @@ class Car {
   updated_at: Date;
 }
 
-export default Car;
+export default Specification;

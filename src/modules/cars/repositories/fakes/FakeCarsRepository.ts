@@ -7,10 +7,23 @@ import Car from '../../infra/typeorm/entities/Car';
 class FakeCarsRepository implements ICarsRepository {
   private cars: Car[] = [];
 
-  public async create(carData: ICreateCarDTO): Promise<Car> {
+  public async create({
+    name,
+    brand,
+    model,
+    daily_rent_value,
+    specifications,
+  }: ICreateCarDTO): Promise<Car> {
     const car = new Car();
 
-    Object.assign(car, { id: uuidv4() }, carData);
+    Object.assign(car, {
+      id: uuidv4(),
+      name,
+      brand,
+      model,
+      daily_rent_value,
+      specifications,
+    });
 
     this.cars.push(car);
 

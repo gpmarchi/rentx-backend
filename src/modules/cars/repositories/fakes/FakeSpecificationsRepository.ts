@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import ICreateSpecificationDTO from '@modules/cars/dtos/ICreateSpecificationDTO';
+import IFindSpecificationDTO from '@modules/cars/dtos/IFindSpecificationDTO';
 import ISpecificationsRepository from '@modules/cars/repositories/ISpecificationsRepository';
 import Specification from '../../infra/typeorm/entities/Specification';
 
@@ -25,6 +26,25 @@ class FakeSpecificationsRepository implements ISpecificationsRepository {
     );
 
     return specification;
+  }
+
+  public async findAllById(
+    specifications: IFindSpecificationDTO[],
+  ): Promise<Specification[]> {
+    const foundSpecifications: Specification[] = [];
+
+    specifications.forEach(searchedSpecification => {
+      const specification = this.specifications.find(
+        currentSpecification =>
+          currentSpecification.id === searchedSpecification.id,
+      );
+
+      if (specification) {
+        foundSpecifications.push(specification);
+      }
+    });
+
+    return foundSpecifications;
   }
 }
 
