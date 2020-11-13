@@ -15,6 +15,9 @@ import CarsRepository from '@modules/cars/infra/typeorm/repositories/CarsReposit
 import ISpecificationsRepository from '@modules/cars/repositories/ISpecificationsRepository';
 import SpecificationsRepository from '@modules/cars/infra/typeorm/repositories/SpecificationsRepository';
 
+import IFuelsRepository from '@modules/cars/repositories/IFuelsRepository';
+import FuelsRepository from '@modules/cars/infra/typeorm/repositories/FuelsRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -30,4 +33,9 @@ container.registerSingleton<ICarsRepository>('CarsRepository', CarsRepository);
 container.registerSingleton<ISpecificationsRepository>(
   'SpecificationsRepository',
   SpecificationsRepository,
+);
+
+container.registerSingleton<IFuelsRepository>(
+  'FuelsRepository',
+  FuelsRepository,
 );
