@@ -10,9 +10,11 @@ export default celebrate({
       .required()
       .items(
         Joi.object().required().keys({
-          specification_id: Joi.string().required(),
+          specification_id: Joi.string().uuid().required(),
           value: Joi.string().required(),
         }),
       ),
+    fuel_id: Joi.string().uuid().required(),
+    transmission_id: Joi.string().uuid().required(),
   }),
 });

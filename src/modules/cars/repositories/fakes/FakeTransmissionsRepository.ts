@@ -27,6 +27,14 @@ class FakeTransmissionsRepository implements ITransmissionsRepository {
 
     return transmission;
   }
+
+  public async findById(id: string): Promise<Transmission | undefined> {
+    const transmission = this.transmissions.find(
+      currentTransmission => currentTransmission.id === id,
+    );
+
+    return transmission;
+  }
 }
 
 export default FakeTransmissionsRepository;

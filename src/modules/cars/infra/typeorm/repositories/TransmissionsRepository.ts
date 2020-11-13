@@ -26,6 +26,12 @@ class TransmissionsRepository implements ITransmissionsRepository {
 
     return transmission;
   }
+
+  public async findById(id: string): Promise<Transmission | undefined> {
+    const transmission = await this.ormRepository.findOne(id);
+
+    return transmission;
+  }
 }
 
 export default TransmissionsRepository;

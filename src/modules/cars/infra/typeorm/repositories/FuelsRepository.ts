@@ -26,6 +26,12 @@ class FuelsRepository implements IFuelsRepository {
 
     return fuel;
   }
+
+  public async findById(id: string): Promise<Fuel | undefined> {
+    const fuel = await this.ormRepository.findOne(id);
+
+    return fuel;
+  }
 }
 
 export default FuelsRepository;

@@ -8,6 +8,8 @@ export default interface ICarsRepository {
     model,
     daily_rent_value,
     specifications,
+    fuel_id,
+    transmission_id,
   }: ICreateCarDTO): Promise<Car>;
 
   findByName(name: string): Promise<Car | undefined>;

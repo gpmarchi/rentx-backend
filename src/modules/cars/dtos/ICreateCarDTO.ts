@@ -1,5 +1,5 @@
 interface ISpecification {
-  id: string;
+  specification_id: string;
   value: string;
 }
 
@@ -9,4 +9,6 @@ export default interface ICreateCarDTO {
   model: string;
   daily_rent_value: number;
   specifications: ISpecification[];
+  fuel_id: string;
+  transmission_id: string;
 }

@@ -5,4 +5,6 @@ export default interface IFuelsRepository {
   create({ name }: ICreateFuelDTO): Promise<Fuel>;
 
   findByName(name: string): Promise<Fuel | undefined>;
+
+  findById(id: string): Promise<Fuel | undefined>;
 }

@@ -25,6 +25,12 @@ class FakeFuelsRepository implements IFuelsRepository {
 
     return fuel;
   }
+
+  public async findById(id: string): Promise<Fuel | undefined> {
+    const fuel = this.fuels.find(currentFuel => currentFuel.id === id);
+
+    return fuel;
+  }
 }
 
 export default FakeFuelsRepository;

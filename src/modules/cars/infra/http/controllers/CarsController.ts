@@ -11,6 +11,8 @@ export default class CarsController {
       model,
       daily_rent_value,
       specifications,
+      fuel_id,
+      transmission_id,
     } = request.body;
 
     const createCar = container.resolve(CreateCarService);
@@ -21,6 +23,8 @@ export default class CarsController {
       model,
       daily_rent_value,
       specifications,
+      fuel_id,
+      transmission_id,
     });
 
     return response.json(car);

@@ -5,4 +5,6 @@ export default interface ITransmissionsRepository {
   create({ name }: ICreateTransmissionDTO): Promise<Transmission>;
 
   findByName(name: string): Promise<Transmission | undefined>;
+
+  findById(id: string): Promise<Transmission | undefined>;
 }
