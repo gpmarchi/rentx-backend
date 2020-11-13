@@ -11,7 +11,7 @@ class FuelsRepository implements IFuelsRepository {
     this.ormRepository = getRepository(Fuel);
   }
 
-  public async create({ name }: ICreateFuelDTO): Promise<Car> {
+  public async create({ name }: ICreateFuelDTO): Promise<Fuel> {
     const fuel = this.ormRepository.create({
       name,
     });
