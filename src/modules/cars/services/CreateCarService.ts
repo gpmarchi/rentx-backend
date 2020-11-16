@@ -49,19 +49,21 @@ class CreateCarService {
       throw new AppError('Car already registered.');
     }
 
-    const specificationIds = specifications.map(specification => {
-      return { id: specification.specification_id };
-    });
+    if (specifications) {
+      const specificationIds = specifications.map(specification => {
+        return { id: specification.specification_id };
+      });
 
-    const foundSpecifications = await this.specificationsRepository.findAllById(
-      specificationIds,
-    );
+      const foundSpecifications = await this.specificationsRepository.findAllById(
+        specificationIds,
+      );
 
-    if (
-      foundSpecifications.length === 0 ||
-      foundSpecifications.length < specificationIds.length
-    ) {
-      throw new AppError('You must provide valid specifications.');
+      if (
+        foundSpecifications.length === 0 ||
+        foundSpecifications.length < specificationIds.length
+      ) {
+        throw new AppError('You must provide valid specifications.');
+      }
     }
 
     const registeredFuel = await this.fuelsRepository.findById(fuel_id);
