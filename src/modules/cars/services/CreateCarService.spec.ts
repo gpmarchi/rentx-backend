@@ -49,7 +49,7 @@ describe('CreateCar', () => {
       daily_rent_value: 500,
       specifications: [
         {
-          id: specification.id,
+          specification_id: specification.id,
           value: '320',
         },
       ],
@@ -62,7 +62,7 @@ describe('CreateCar', () => {
       expect.objectContaining({
         specifications: expect.arrayContaining([
           expect.objectContaining({
-            id: specification.id,
+            specification_id: specification.id,
             value: '320',
           }),
         ]),
@@ -81,7 +81,7 @@ describe('CreateCar', () => {
         daily_rent_value: 500,
         specifications: [
           {
-            id: 'inexistent id',
+            specification_id: 'inexistent id',
             value: '320',
           },
         ],
@@ -106,11 +106,11 @@ describe('CreateCar', () => {
         daily_rent_value: 500,
         specifications: [
           {
-            id: 'invalid id',
+            specification_id: 'invalid id',
             value: '320',
           },
           {
-            id: specification.id,
+            specification_id: specification.id,
             value: '320',
           },
         ],
@@ -149,7 +149,7 @@ describe('CreateCar', () => {
         daily_rent_value: 500,
         specifications: [
           {
-            id: specification.id,
+            specification_id: specification.id,
             value: '320',
           },
         ],
@@ -178,7 +178,7 @@ describe('CreateCar', () => {
         daily_rent_value: 500,
         specifications: [
           {
-            id: specification.id,
+            specification_id: specification.id,
             value: '320',
           },
         ],
