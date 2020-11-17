@@ -17,7 +17,13 @@ export default function errorHandler(
   }
 
   if (error instanceof CelebrateError) {
-    const message = error.details.get('body')?.message;
+    const errorMap = error.details;
+
+    let message;
+
+    errorMap.forEach((value, key) => {
+      message = `[${key}] ${value.message}`;
+    });
 
     return response.status(400).json({
       status: 'error',

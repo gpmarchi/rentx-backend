@@ -1,4 +1,6 @@
 import ICreateCarDTO from '@modules/cars/dtos/ICreateCarDTO';
+import IFindAllCarsDTO from '@modules/cars/dtos/IFindAllCarsDTO';
+import IPaginatedCarResponseDTO from '@modules/cars/dtos/IPaginatedCarResponseDTO';
 import Car from '../infra/typeorm/entities/Car';
 
 export default interface ICarsRepository {
@@ -13,4 +15,10 @@ export default interface ICarsRepository {
   }: ICreateCarDTO): Promise<Car>;
 
   findByName(name: string): Promise<Car | undefined>;
+
+  findAll({
+    page,
+    limit,
+    name,
+  }: IFindAllCarsDTO): Promise<IPaginatedCarResponseDTO>;
 }

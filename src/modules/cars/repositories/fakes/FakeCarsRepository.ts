@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import ICreateCarDTO from '@modules/cars/dtos/ICreateCarDTO';
+import IFindAllCarsDTO from '@modules/cars/dtos/IFindAllCarsDTO';
+import IPaginatedCarResponseDTO from '@modules/cars/dtos/IPaginatedCarResponseDTO';
 import ICarsRepository from '@modules/cars/repositories/ICarsRepository';
 import Car from '../../infra/typeorm/entities/Car';
 
@@ -38,6 +40,10 @@ class FakeCarsRepository implements ICarsRepository {
     const car = this.cars.find(currentCar => currentCar.name === name);
 
     return car;
+  }
+
+  public async findAll(_: IFindAllCarsDTO): Promise<IPaginatedCarResponseDTO> {
+    return { totalRecords: this.cars.length, totalPages: 1, data: this.cars };
   }
 }
 
