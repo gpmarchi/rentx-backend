@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateCarService from '@modules/cars/services/CreateCarService';
 import ListCarsService from '@modules/cars/services/ListCarsService';
+import ShowCarService from '@modules/cars/services/ShowCarService';
 
 export default class CarsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -43,5 +44,15 @@ export default class CarsController {
     });
 
     return response.json(cars);
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const showCar = container.resolve(ShowCarService);
+
+    const car = await showCar.execute({ car_id: id });
+
+    return response.json(car);
   }
 }

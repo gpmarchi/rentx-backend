@@ -45,6 +45,12 @@ class FakeCarsRepository implements ICarsRepository {
   public async findAll(_: IFindAllCarsDTO): Promise<IPaginatedCarResponseDTO> {
     return { totalRecords: this.cars.length, totalPages: 1, data: this.cars };
   }
+
+  public async findById(id: string): Promise<Car | undefined> {
+    const car = this.cars.find(currentCar => currentCar.id === id);
+
+    return car;
+  }
 }
 
 export default FakeCarsRepository;

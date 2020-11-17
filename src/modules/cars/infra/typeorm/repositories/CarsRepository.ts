@@ -69,6 +69,15 @@ class CarsRepository implements ICarsRepository {
 
     return { totalRecords, totalPages, data: cars };
   }
+
+  public async findById(id: string): Promise<Car | undefined> {
+    const car = await this.ormRepository.findOne(id, {
+      select: ['id', 'name', 'brand', 'model', 'daily_rent_value'],
+      relations: ['specifications', 'fuel', 'transmission'],
+    });
+
+    return car;
+  }
 }
 
 export default CarsRepository;

@@ -21,4 +21,6 @@ export default interface ICarsRepository {
     limit,
     name,
   }: IFindAllCarsDTO): Promise<IPaginatedCarResponseDTO>;
+
+  findById(id: string): Promise<Car | undefined>;
 }
