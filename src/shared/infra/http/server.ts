@@ -5,6 +5,7 @@ import express from 'express';
 import helmet from 'helmet';
 import 'express-async-errors';
 
+import uploadConfig from '@config/upload';
 import errorHandler from './middlewares/errorHandler';
 import rateLimiter from './middlewares/rateLimiter';
 import routes from './routes';
@@ -16,6 +17,7 @@ const app = express();
 
 app.use(helmet());
 app.use(express.json());
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(rateLimiter);
 app.use(routes);
 app.use(errorHandler);

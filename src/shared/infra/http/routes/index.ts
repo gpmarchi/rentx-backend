@@ -8,6 +8,7 @@ import carsRouter from '@modules/cars/infra/http/routes/cars.routes';
 import specificationsRouter from '@modules/cars/infra/http/routes/specifications.routes';
 import fuelsRouter from '@modules/cars/infra/http/routes/fuels.routes';
 import transmissionsRouter from '@modules/cars/infra/http/routes/transmissions.routes';
+import filesRouter from '@modules/files/infra/http/routes/files.routes';
 
 const routes = Router();
 
@@ -19,5 +20,6 @@ routes.use('/cars', carsRouter);
 routes.use('/specifications', specificationsRouter);
 routes.use('/fuels', fuelsRouter);
 routes.use('/transmissions', transmissionsRouter);
+routes.use('/files', filesRouter);
 
 export default routes;

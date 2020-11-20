@@ -113,6 +113,10 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Temp folder
+tmp/*
+!tmp/.gitkeep
+
 # MacOS
 .DS_Store
 
