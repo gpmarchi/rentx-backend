@@ -11,9 +11,13 @@ class TransmissionsRepository implements ITransmissionsRepository {
     this.ormRepository = getRepository(Transmission);
   }
 
-  public async create({ name }: ICreateTransmissionDTO): Promise<Transmission> {
+  public async create({
+    name,
+    icon_id,
+  }: ICreateTransmissionDTO): Promise<Transmission> {
     const transmission = this.ormRepository.create({
       name,
+      icon_id,
     });
 
     await this.ormRepository.save(transmission);

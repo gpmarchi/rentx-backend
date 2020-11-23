@@ -40,6 +40,7 @@ describe('CreateCar', () => {
 
     const transmission = await fakeTransmissionsRepository.create({
       name: 'Manual',
+      icon_id: 'icon id',
     });
 
     const car = await createCar.execute({

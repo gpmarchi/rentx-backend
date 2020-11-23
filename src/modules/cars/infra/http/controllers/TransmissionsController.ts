@@ -5,12 +5,13 @@ import CreateTransmissionService from '@modules/cars/services/CreateTransmission
 
 export default class TransmissionsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name } = request.body;
+    const { name, icon_id } = request.body;
 
     const createTransmission = container.resolve(CreateTransmissionService);
 
     const transmission = await createTransmission.execute({
       name,
+      icon_id,
     });
 
     return response.json(transmission);

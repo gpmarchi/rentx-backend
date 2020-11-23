@@ -7,12 +7,16 @@ import Transmission from '../../infra/typeorm/entities/Transmission';
 class FakeTransmissionsRepository implements ITransmissionsRepository {
   private transmissions: Transmission[] = [];
 
-  public async create({ name }: ICreateTransmissionDTO): Promise<Transmission> {
+  public async create({
+    name,
+    icon_id,
+  }: ICreateTransmissionDTO): Promise<Transmission> {
     const transmission = new Transmission();
 
     Object.assign(transmission, {
       id: uuidv4(),
       name,
+      icon_id,
     });
 
     this.transmissions.push(transmission);
