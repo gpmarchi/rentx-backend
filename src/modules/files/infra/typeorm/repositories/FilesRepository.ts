@@ -26,6 +26,16 @@ class FilesRepository implements IFilesRepository {
 
     return file;
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
+
+  public async findById(id: string): Promise<File | undefined> {
+    const file = await this.ormRepository.findOne(id);
+
+    return file;
+  }
 }
 
 export default FilesRepository;

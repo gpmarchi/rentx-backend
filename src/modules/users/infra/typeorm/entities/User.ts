@@ -4,9 +4,13 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
+
+import File from '@modules/files/infra/typeorm/entities/File';
 
 @Entity('users')
 class User {
@@ -25,6 +29,13 @@ class User {
 
   @Column()
   phone: string;
+
+  @Column()
+  avatar_id: string;
+
+  @OneToOne(() => File)
+  @JoinColumn({ name: 'avatar_id' })
+  avatar: File;
 
   @CreateDateColumn()
   created_at: Date;

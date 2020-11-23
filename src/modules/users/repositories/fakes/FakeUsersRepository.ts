@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import File from '@modules/files/infra/typeorm/entities/File';
 import User from '../../infra/typeorm/entities/User';
 
 class FakeUsersRepository implements IUsersRepository {
@@ -22,7 +23,7 @@ class FakeUsersRepository implements IUsersRepository {
   public async create(userData: ICreateUserDTO): Promise<User> {
     const user = new User();
 
-    Object.assign(user, { id: uuidv4() }, userData);
+    Object.assign(user, { id: uuidv4() }, userData, { avatar: new File() });
 
     this.users.push(user);
 
@@ -34,9 +35,17 @@ class FakeUsersRepository implements IUsersRepository {
       currentUser => currentUser.id === user.id,
     );
 
-    this.users[userIndex] = user;
+    const updatedUser = user;
 
-    return user;
+    const userAvatar = updatedUser.avatar;
+
+    if (userAvatar) {
+      updatedUser.avatar_id = userAvatar.id;
+    }
+
+    this.users[userIndex] = updatedUser;
+
+    return updatedUser;
   }
 }
 

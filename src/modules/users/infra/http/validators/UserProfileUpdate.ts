@@ -16,5 +16,6 @@ export default celebrate({
         then: Joi.string().required(),
       })
       .valid(Joi.ref('password')),
+    avatar_id: Joi.string().uuid(),
   }),
 });

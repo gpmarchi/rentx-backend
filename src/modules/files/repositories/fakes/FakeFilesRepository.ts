@@ -25,6 +25,16 @@ class FakeFilesRepository implements IFilesRepository {
 
     return file;
   }
+
+  public async delete(id: string): Promise<void> {
+    this.files.filter(file => file.id === id);
+  }
+
+  public async findById(id: string): Promise<File | undefined> {
+    const file = this.files.find(currentFile => currentFile.id === id);
+
+    return file;
+  }
 }
 
 export default FakeFilesRepository;
