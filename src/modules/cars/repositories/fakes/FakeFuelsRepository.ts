@@ -7,12 +7,13 @@ import Fuel from '../../infra/typeorm/entities/Fuel';
 class FakeFuelsRepository implements IFuelsRepository {
   private fuels: Fuel[] = [];
 
-  public async create({ name }: ICreateFuelDTO): Promise<Fuel> {
+  public async create({ name, icon_id }: ICreateFuelDTO): Promise<Fuel> {
     const fuel = new Fuel();
 
     Object.assign(fuel, {
       id: uuidv4(),
       name,
+      icon_id,
     });
 
     this.fuels.push(fuel);

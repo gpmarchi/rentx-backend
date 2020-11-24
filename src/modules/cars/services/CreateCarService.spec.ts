@@ -36,6 +36,7 @@ describe('CreateCar', () => {
 
     const fuel = await fakeFuelsRepository.create({
       name: 'Gasoline',
+      icon_id: 'icon id',
     });
 
     const transmission = await fakeTransmissionsRepository.create({
@@ -169,6 +170,7 @@ describe('CreateCar', () => {
 
     const fuel = await fakeFuelsRepository.create({
       name: 'Gasoline',
+      icon_id: 'icon id',
     });
 
     await expect(

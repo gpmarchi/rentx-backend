@@ -11,9 +11,10 @@ class FuelsRepository implements IFuelsRepository {
     this.ormRepository = getRepository(Fuel);
   }
 
-  public async create({ name }: ICreateFuelDTO): Promise<Fuel> {
+  public async create({ name, icon_id }: ICreateFuelDTO): Promise<Fuel> {
     const fuel = this.ormRepository.create({
       name,
+      icon_id,
     });
 
     await this.ormRepository.save(fuel);
