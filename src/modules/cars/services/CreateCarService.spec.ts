@@ -32,6 +32,7 @@ describe('CreateCar', () => {
       name: 'Maximum speed',
       description: 'Maximum speed the car reaches',
       unit: 'km/h',
+      icon_id: 'icon id',
     });
 
     const fuel = await fakeFuelsRepository.create({
@@ -98,6 +99,7 @@ describe('CreateCar', () => {
       name: 'Maximum speed',
       description: 'Maximum speed the car reaches',
       unit: 'km/h',
+      icon_id: 'icon id',
     });
 
     await expect(
@@ -141,6 +143,7 @@ describe('CreateCar', () => {
       name: 'Maximum speed',
       description: 'Maximum speed the car reaches',
       unit: 'km/h',
+      icon_id: 'icon id',
     });
 
     await expect(
@@ -166,6 +169,7 @@ describe('CreateCar', () => {
       name: 'Maximum speed',
       description: 'Maximum speed the car reaches',
       unit: 'km/h',
+      icon_id: 'icon id',
     });
 
     const fuel = await fakeFuelsRepository.create({

@@ -5,7 +5,7 @@ import CreateSpecificationService from '@modules/cars/services/CreateSpecificati
 
 export default class SpecifiationsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, unit } = request.body;
+    const { name, description, unit, icon_id } = request.body;
 
     const createSpecification = container.resolve(CreateSpecificationService);
 
@@ -13,6 +13,7 @@ export default class SpecifiationsController {
       name,
       description,
       unit,
+      icon_id,
     });
 
     return response.json(car);

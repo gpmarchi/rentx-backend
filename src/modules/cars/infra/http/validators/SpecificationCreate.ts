@@ -5,5 +5,6 @@ export default celebrate({
     name: Joi.string().required(),
     description: Joi.string(),
     unit: Joi.string(),
+    icon_id: Joi.string().uuid().required(),
   }),
 });

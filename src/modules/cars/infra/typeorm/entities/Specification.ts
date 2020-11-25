@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
+import File from '@modules/files/infra/typeorm/entities/File';
 import CarSpecification from './CarSpecification';
 
 @Entity('specifications')
@@ -31,6 +34,13 @@ class Specification {
     },
   )
   cars: CarSpecification[];
+
+  @Column()
+  icon_id: string;
+
+  @OneToOne(() => File)
+  @JoinColumn({ name: 'icon_id' })
+  icon: File;
 
   @CreateDateColumn()
   created_at: Date;
