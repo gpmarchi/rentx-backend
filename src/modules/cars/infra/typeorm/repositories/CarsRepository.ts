@@ -62,7 +62,7 @@ class CarsRepository implements ICarsRepository {
     const cars = await this.ormRepository.find({
       select: ['id', 'name', 'brand', 'model', 'daily_rent_value'],
       ...where,
-      relations: ['specifications', 'fuel', 'transmission'],
+      relations: ['fuel', 'fuel.icon'],
       skip: (page - 1) * limit,
       take: limit,
     });
@@ -73,7 +73,15 @@ class CarsRepository implements ICarsRepository {
   public async findById(id: string): Promise<Car | undefined> {
     const car = await this.ormRepository.findOne(id, {
       select: ['id', 'name', 'brand', 'model', 'daily_rent_value'],
-      relations: ['specifications', 'fuel', 'transmission'],
+      relations: [
+        'specifications',
+        'specifications.specification',
+        'specifications.specification.icon',
+        'fuel',
+        'fuel.icon',
+        'transmission',
+        'transmission.icon',
+      ],
     });
 
     return car;
