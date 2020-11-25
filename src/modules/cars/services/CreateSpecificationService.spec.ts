@@ -57,4 +57,15 @@ describe('CreateSpecification', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to create specification with invalid icon', async () => {
+    await expect(
+      createSpecification.execute({
+        name: 'Maximum speed',
+        description: 'Maximum speed the car reaches',
+        unit: 'km/h',
+        icon_id: 'some icon',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
