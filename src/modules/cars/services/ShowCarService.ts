@@ -17,7 +17,7 @@ class ShowCarService {
     this.carsRepository = carsRepository;
   }
 
-  public async execute({ car_id }: IShowCarDTO): Promise<Car | undefined> {
+  public async execute({ car_id }: IShowCarDTO): Promise<Car> {
     const car = await this.carsRepository.findById(car_id);
 
     if (!car) {

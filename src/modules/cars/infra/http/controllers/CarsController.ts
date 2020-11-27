@@ -5,6 +5,8 @@ import CreateCarService from '@modules/cars/services/CreateCarService';
 import ListCarsService from '@modules/cars/services/ListCarsService';
 import ShowCarService from '@modules/cars/services/ShowCarService';
 
+import CarMapper from '../mappers/CarMapper';
+
 export default class CarsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
@@ -37,13 +39,15 @@ export default class CarsController {
 
     const listCars = container.resolve(ListCarsService);
 
-    const cars = await listCars.execute({
+    const { data, ...totals } = await listCars.execute({
       page: Number(page),
       limit: Number(limit),
       name: name ? String(name) : name,
     });
 
-    return response.json(cars);
+    const transformedCars = data.map(car => CarMapper.toDTO(car));
+
+    return response.json({ ...totals, data: transformedCars });
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -53,6 +57,6 @@ export default class CarsController {
 
     const car = await showCar.execute({ car_id: id });
 
-    return response.json(car);
+    return response.json(CarMapper.toDTO(car));
   }
 }
