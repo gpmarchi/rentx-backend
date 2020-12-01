@@ -81,6 +81,7 @@ class CarsRepository implements ICarsRepository {
         'fuel.icon',
         'transmission',
         'transmission.icon',
+        'images',
       ],
     });
 

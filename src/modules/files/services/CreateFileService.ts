@@ -24,12 +24,10 @@ class CreateFileService {
   public async execute({
     original_name,
     filename,
-    car_id,
   }: ICreateFileDTO): Promise<File> {
     const file = await this.filesRepository.create({
       original_name,
       filename,
-      car_id,
     });
 
     await this.storageProvider.saveFile(filename);

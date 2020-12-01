@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CelebrateError } from 'celebrate';
+import { MulterError } from 'multer';
 
 import AppError from '@shared/errors/AppError';
 
@@ -28,6 +29,13 @@ export default function errorHandler(
     return response.status(400).json({
       status: 'error',
       message,
+    });
+  }
+
+  if (error instanceof MulterError && error.code === 'LIMIT_UNEXPECTED_FILE') {
+    return response.status(400).json({
+      status: 'error',
+      message: `${error.message} ${error.field}, max image uploads allowed are ${process.env.MAX_IMAGES_PER_CAR}`,
     });
   }
 

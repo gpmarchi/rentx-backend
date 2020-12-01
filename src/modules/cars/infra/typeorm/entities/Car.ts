@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import File from '@modules/files/infra/typeorm/entities/File';
 import CarSpecification from './CarSpecification';
 import Fuel from './Fuel';
 import Transmission from './Transmission';
@@ -48,6 +49,9 @@ class Car {
   @ManyToOne(() => Transmission)
   @JoinColumn({ name: 'transmission_id' })
   transmission: Transmission;
+
+  @OneToMany(() => File, file => file.car)
+  images: File[];
 
   @CreateDateColumn()
   created_at: Date;

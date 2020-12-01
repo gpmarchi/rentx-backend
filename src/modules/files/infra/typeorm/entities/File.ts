@@ -4,11 +4,14 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
-import uploadConfig from '@config/upload';
-
 import { Expose } from 'class-transformer';
+
+import uploadConfig from '@config/upload';
+import Car from '@modules/cars/infra/typeorm/entities/Car';
 
 @Entity('files')
 class File {
@@ -23,6 +26,10 @@ class File {
 
   @Column()
   car_id: string;
+
+  @ManyToOne(() => Car, car => car.images)
+  @JoinColumn({ name: 'car_id' })
+  car: Car;
 
   @CreateDateColumn()
   created_at: Date;

@@ -16,6 +16,14 @@ class FakeStorageProvider implements IStorageProvider {
 
     this.storage.splice(findIndex, 1);
   }
+
+  public async deleteTmpFile(file: string): Promise<void> {
+    const findIndex = this.storage.findIndex(
+      storageFile => storageFile === file,
+    );
+
+    this.storage.splice(findIndex, 1);
+  }
 }
 
 export default FakeStorageProvider;
