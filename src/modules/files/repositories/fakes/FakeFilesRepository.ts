@@ -35,6 +35,14 @@ class FakeFilesRepository implements IFilesRepository {
 
     return file;
   }
+
+  public async findByCarId(car_id: string): Promise<File[]> {
+    const files = this.files.filter(
+      currentFile => currentFile.car_id === car_id,
+    );
+
+    return files;
+  }
 }
 
 export default FakeFilesRepository;

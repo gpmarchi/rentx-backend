@@ -29,22 +29,17 @@ class CreateCarImagesService {
   }
 
   public async execute({ car_id, images }: ICarImagesDTO): Promise<File[]> {
-    // verificar se o carro informado como parâmetro existe
     const car = await this.carsRepository.findById(car_id);
 
-    // se não existir, retornar erro
     if (!car) {
       throw new AppError('Car does not exists');
     }
 
-    // se existir, verificar se já possui 4 imagens associadas
-    // se já possuir 4 imagens associadas apagar os arquivos da pasta temporária
-    // e retornar erro
     const maxImagesPerCar = Number(process.env.MAX_IMAGES_PER_CAR);
 
-    const { images: existingImages } = car;
+    const carFiles = await this.filesRepository.findByCarId(car_id);
 
-    if (existingImages && existingImages.length === maxImagesPerCar) {
+    if (carFiles.length === maxImagesPerCar) {
       const deleteTmpImagesPromises = images.map(async image =>
         this.storageProvider.deleteTmpFile(image.filename),
       );
@@ -56,29 +51,20 @@ class CreateCarImagesService {
       );
     }
 
-    // se não possuir 4 imagens mas possuir algumas imagens já salvas retornar erro
-    // informando o limite ainda disponível para upload e apagar os arquivos da
-    // pasta temporária
-    if (
-      existingImages &&
-      existingImages.length >= 1 &&
-      existingImages.length < maxImagesPerCar
-    ) {
-      images.forEach(image =>
+    const availableImageAssociations = maxImagesPerCar - carFiles.length;
+
+    if (images.length > availableImageAssociations) {
+      const deleteTmpImagesPromises = images.map(image =>
         this.storageProvider.deleteTmpFile(image.filename),
       );
 
-      const availableImageAssociations =
-        maxImagesPerCar - existingImages.length;
+      await Promise.all(deleteTmpImagesPromises);
 
       throw new AppError(
         `Car can only have ${availableImageAssociations} more associated image(s).`,
       );
     }
 
-    // para cada arquivo a ser salvo
-    // inserir os dados do arquivo na tabela Files
-    // mover o arquivo salvo para a pasta correta dentro do servidor
     const promises = images.map(async image => {
       const file = await this.filesRepository.create({
         original_name: image.originalname,

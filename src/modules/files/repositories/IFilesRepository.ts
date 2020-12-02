@@ -7,4 +7,6 @@ export default interface IFilesRepository {
   delete(id: string): Promise<void>;
 
   findById(id: string): Promise<File | undefined>;
+
+  findByCarId(car_id: string): Promise<File[]>;
 }

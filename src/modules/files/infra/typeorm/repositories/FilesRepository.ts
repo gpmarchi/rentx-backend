@@ -36,6 +36,12 @@ class FilesRepository implements IFilesRepository {
 
     return file;
   }
+
+  public async findByCarId(car_id: string): Promise<File[]> {
+    const files = await this.ormRepository.find({ where: { car_id } });
+
+    return files;
+  }
 }
 
 export default FilesRepository;
