@@ -1,3 +1,5 @@
+import { classToClass } from 'class-transformer';
+
 import ICarResponseDTO from '@modules/cars/dtos/ICarResponseDTO';
 import Car from '../../typeorm/entities/Car';
 import FuelMapper from './FuelMapper';
@@ -6,7 +8,7 @@ import SpecificationMapper from './SpecificationMapper';
 
 export default class CarMapper {
   public static toDTO(car: Car): ICarResponseDTO {
-    const { fuel, transmission, specifications, ...rest } = car;
+    const { fuel, transmission, specifications, images, ...rest } = car;
 
     let transformedFuel;
 
@@ -33,10 +35,16 @@ export default class CarMapper {
       }
     }
 
+    const transformedImages = images.map(image => {
+      const imageWithURL = classToClass(image);
+      return imageWithURL.getFileUrl();
+    });
+
     return {
       ...rest,
       fuel: transformedFuel,
       specifications: transformedSpecifications,
+      images: transformedImages,
     };
   }
 }

@@ -62,7 +62,7 @@ class CarsRepository implements ICarsRepository {
     const cars = await this.ormRepository.find({
       select: ['id', 'name', 'brand', 'model', 'daily_rent_value'],
       ...where,
-      relations: ['fuel', 'fuel.icon'],
+      relations: ['fuel', 'fuel.icon', 'images'],
       skip: (page - 1) * limit,
       take: limit,
     });

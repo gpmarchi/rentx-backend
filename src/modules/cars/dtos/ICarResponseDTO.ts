@@ -8,4 +8,5 @@ export default interface ICarResponseDTO {
   daily_rent_value: number;
   fuel: ICarSpecificationResponseDTO | undefined;
   specifications?: ICarSpecificationResponseDTO[];
+  images?: (string | null)[];
 }
