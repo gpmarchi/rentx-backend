@@ -9,6 +9,7 @@ import specificationsRouter from '@modules/cars/infra/http/routes/specifications
 import fuelsRouter from '@modules/cars/infra/http/routes/fuels.routes';
 import transmissionsRouter from '@modules/cars/infra/http/routes/transmissions.routes';
 import filesRouter from '@modules/files/infra/http/routes/files.routes';
+import rentalsRouter from '@modules/rentals/infra/http/routes/rentals.routes';
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/specifications', specificationsRouter);
 routes.use('/fuels', fuelsRouter);
 routes.use('/transmissions', transmissionsRouter);
 routes.use('/files', filesRouter);
+routes.use('/rentals', rentalsRouter);
 
 export default routes;

@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
+import { isWithinInterval } from 'date-fns';
 
 import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
+import IFindCarRentalInDateRangeDTO from '@modules/rentals/dtos/IFindCarRentalInDateRangeDTO';
 import Rental from '../../infra/typeorm/entities/Rental';
 
 class FakeRentalsRepository implements IRentalsRepository {
@@ -30,6 +32,35 @@ class FakeRentalsRepository implements IRentalsRepository {
     this.rentals.push(rental);
 
     return rental;
+  }
+
+  public async findByCarIdAndDateRange({
+    car_id,
+    start_date,
+    end_date,
+  }: IFindCarRentalInDateRangeDTO): Promise<Rental[]> {
+    const rentals = this.rentals.filter(
+      rental =>
+        (rental.car_id === car_id &&
+          isWithinInterval(rental.start_date, {
+            start: start_date,
+            end: end_date,
+          })) ||
+        isWithinInterval(rental.end_date, {
+          start: start_date,
+          end: end_date,
+        }) ||
+        isWithinInterval(start_date, {
+          start: rental.start_date,
+          end: rental.end_date,
+        }) ||
+        isWithinInterval(end_date, {
+          start: rental.start_date,
+          end: rental.end_date,
+        }),
+    );
+
+    return rentals;
   }
 }
 

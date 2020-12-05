@@ -3,6 +3,6 @@ export default interface ICreateRentalDTO {
   user_id: string;
   start_date: Date;
   end_date: Date;
-  daily_rent_value: number;
+  daily_rent_value?: number;
   total?: number;
 }

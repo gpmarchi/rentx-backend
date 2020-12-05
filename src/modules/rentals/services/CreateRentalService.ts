@@ -34,24 +34,19 @@ class CreateRentalService {
     user_id,
     start_date,
     end_date,
-    daily_rent_value,
   }: ICreateRentalDTO): Promise<Rental> {
-    // verificar se o carro indicado para aluguel existe
     const car = await this.carsRepository.findById(car_id);
 
-    // se não existir erro
     if (!car) {
       throw new AppError('Selected car does not exist.');
     }
 
-    // verificar se o usuário indicado existe
     const user = await this.usersRepository.findById(user_id);
-    // se não existir erro
+
     if (!user) {
       throw new AppError('Invalid user.');
     }
 
-    // verificar se o período composto pelas datas de início e fim é válido (data futura)
     if (
       isBefore(start_date, new Date()) ||
       isBefore(end_date, new Date()) ||
@@ -60,14 +55,20 @@ class CreateRentalService {
       throw new AppError('Selected rental period is invalid.');
     }
 
-    // verificar se já existe um aluguel cadastrado para o carro indicado no período especificado
-    // se existir erro
+    const rentals = await this.rentalsRepository.findByCarIdAndDateRange({
+      car_id,
+      start_date,
+      end_date,
+    });
 
-    // calcular o valor total do aluguel daily_rent_value * number of days
+    if (rentals.length > 0) {
+      throw new AppError('The car is already rented for the selected period.');
+    }
+
+    const { daily_rent_value } = car;
     const amountOfRentalDays = differenceInDays(end_date, start_date);
     const total = daily_rent_value * amountOfRentalDays;
 
-    // salvar o aluguel
     const rental = await this.rentalsRepository.create({
       car_id,
       user_id,

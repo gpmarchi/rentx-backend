@@ -24,6 +24,9 @@ import TransmissionsRepository from '@modules/cars/infra/typeorm/repositories/Tr
 import IFilesRepository from '@modules/files/repositories/IFilesRepository';
 import FilesRepository from '@modules/files/infra/typeorm/repositories/FilesRepository';
 
+import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
+import RentalsRepository from '@modules/rentals/infra/typeorm/repositories/RentalsRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -54,4 +57,9 @@ container.registerSingleton<ITransmissionsRepository>(
 container.registerSingleton<IFilesRepository>(
   'FilesRepository',
   FilesRepository,
+);
+
+container.registerSingleton<IRentalsRepository>(
+  'RentalsRepository',
+  RentalsRepository,
 );
