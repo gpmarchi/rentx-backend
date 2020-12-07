@@ -25,12 +25,12 @@ export default class CreateRentals1607003424044 implements MigrationInterface {
           },
           {
             name: 'start_date',
-            type: 'timestamp',
+            type: 'timestamp with time zone',
             isNullable: false,
           },
           {
             name: 'end_date',
-            type: 'timestamp',
+            type: 'timestamp with time zone',
             isNullable: false,
           },
           {
