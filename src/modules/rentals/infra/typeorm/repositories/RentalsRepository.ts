@@ -60,6 +60,15 @@ class RentalsRepository implements IRentalsRepository {
 
     return rentals;
   }
+
+  public async findByUserId(user_id: string): Promise<Rental[]> {
+    const rentals = this.ormRepository.find({
+      where: { user_id },
+      relations: ['car', 'car.images', 'car.fuel', 'car.fuel.icon'],
+    });
+
+    return rentals;
+  }
 }
 
 export default RentalsRepository;

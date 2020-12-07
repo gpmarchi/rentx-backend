@@ -62,6 +62,12 @@ class FakeRentalsRepository implements IRentalsRepository {
 
     return rentals;
   }
+
+  public async findByUserId(user_id: string): Promise<Rental[]> {
+    const rentals = this.rentals.filter(rental => rental.user_id === user_id);
+
+    return rentals;
+  }
 }
 
 export default FakeRentalsRepository;

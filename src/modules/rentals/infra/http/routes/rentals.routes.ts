@@ -10,5 +10,6 @@ const rentalsController = new RentalsController();
 rentalsRouter.use(authenticate);
 
 rentalsRouter.post('/', createRentalValidator, rentalsController.create);
+rentalsRouter.get('/', rentalsController.index);
 
 export default rentalsRouter;

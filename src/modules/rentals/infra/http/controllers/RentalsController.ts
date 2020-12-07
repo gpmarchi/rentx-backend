@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import CreateRentalService from '@modules/rentals/services/CreateRentalService';
+import ListRentalsService from '@modules/rentals/services/ListRentalsService';
 
 export default class RentalsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -19,5 +20,15 @@ export default class RentalsController {
     });
 
     return response.json(rental);
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { user } = request;
+
+    const listRentals = container.resolve(ListRentalsService);
+
+    const rentals = await listRentals.execute(user.id);
+
+    return response.json(rentals);
   }
 }

@@ -17,4 +17,6 @@ export default interface IRentalsRepository {
     start_date,
     end_date,
   }: IFindCarRentalInDateRangeDTO): Promise<Rental[]>;
+
+  findByUserId(user_id: string): Promise<Rental[]>;
 }
