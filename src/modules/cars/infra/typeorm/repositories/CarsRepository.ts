@@ -1,4 +1,4 @@
-import { Repository, getRepository, ILike } from 'typeorm';
+import { Repository, getRepository, ILike, In, Not } from 'typeorm';
 
 import ICreateCarDTO from '@modules/cars/dtos/ICreateCarDTO';
 import IFindAllCarsDTO from '@modules/cars/dtos/IFindAllCarsDTO';
@@ -86,6 +86,15 @@ class CarsRepository implements ICarsRepository {
     });
 
     return car;
+  }
+
+  public async findNotListed(ids: string[]): Promise<Car[]> {
+    const cars = this.ormRepository.find({
+      where: { id: Not(In(ids)) },
+      relations: ['fuel', 'fuel.icon', 'images'],
+    });
+
+    return cars;
   }
 }
 

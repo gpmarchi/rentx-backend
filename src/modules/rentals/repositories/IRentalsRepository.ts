@@ -1,5 +1,6 @@
 import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IFindCarRentalInDateRangeDTO from '../dtos/IFindCarRentalInDateRangeDTO';
+import IFindRentalByDateRangeDTO from '../dtos/IFindRentalByDateRangeDTO';
 import Rental from '../infra/typeorm/entities/Rental';
 
 export default interface IRentalsRepository {
@@ -19,4 +20,9 @@ export default interface IRentalsRepository {
   }: IFindCarRentalInDateRangeDTO): Promise<Rental[]>;
 
   findByUserId(user_id: string): Promise<Rental[]>;
+
+  findByDateRange({
+    start_date,
+    end_date,
+  }: IFindRentalByDateRangeDTO): Promise<Rental[]>;
 }

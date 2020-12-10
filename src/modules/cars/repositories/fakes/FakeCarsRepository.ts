@@ -51,6 +51,12 @@ class FakeCarsRepository implements ICarsRepository {
 
     return car;
   }
+
+  public async findNotListed(ids: string[]): Promise<Car[]> {
+    const cars = this.cars.filter(car => !ids.includes(car.id));
+
+    return cars;
+  }
 }
 
 export default FakeCarsRepository;

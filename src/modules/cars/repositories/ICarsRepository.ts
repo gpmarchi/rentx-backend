@@ -23,4 +23,6 @@ export default interface ICarsRepository {
   }: IFindAllCarsDTO): Promise<IPaginatedCarResponseDTO>;
 
   findById(id: string): Promise<Car | undefined>;
+
+  findNotListed(ids: string[]): Promise<Car[]>;
 }
