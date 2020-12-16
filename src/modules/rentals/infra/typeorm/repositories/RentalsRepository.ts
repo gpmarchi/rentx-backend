@@ -63,10 +63,16 @@ class RentalsRepository implements IRentalsRepository {
   }
 
   public async findByUserId(user_id: string): Promise<Rental[]> {
-    const rentals = this.ormRepository.find({
-      where: { user_id },
-      relations: ['car', 'car.images', 'car.fuel', 'car.fuel.icon'],
-    });
+    const rentals = this.ormRepository
+      .createQueryBuilder('rental')
+      .where('user_id = :id', { id: user_id })
+      .andWhere('start_date >= :current_date', { current_date: new Date() })
+      .orWhere('end_date >= :current_date', { current_date: new Date() })
+      .leftJoinAndSelect('rental.car', 'car')
+      .leftJoinAndSelect('car.images', 'images')
+      .leftJoinAndSelect('car.fuel', 'fuel')
+      .leftJoinAndSelect('fuel.icon', 'icon')
+      .getMany();
 
     return rentals;
   }

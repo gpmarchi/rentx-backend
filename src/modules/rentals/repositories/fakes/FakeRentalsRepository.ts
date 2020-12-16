@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { isWithinInterval } from 'date-fns';
+import { isWithinInterval, isAfter, isEqual } from 'date-fns';
 
 import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
@@ -65,7 +65,14 @@ class FakeRentalsRepository implements IRentalsRepository {
   }
 
   public async findByUserId(user_id: string): Promise<Rental[]> {
-    const rentals = this.rentals.filter(rental => rental.user_id === user_id);
+    const rentals = this.rentals.filter(
+      rental =>
+        (rental.user_id === user_id &&
+          isEqual(rental.start_date, new Date())) ||
+        isEqual(rental.end_date, new Date()) ||
+        isAfter(rental.start_date, new Date()) ||
+        isAfter(rental.end_date, new Date()),
+    );
 
     return rentals;
   }
