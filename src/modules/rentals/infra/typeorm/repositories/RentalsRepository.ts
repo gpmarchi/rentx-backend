@@ -4,6 +4,7 @@ import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
 import IFindCarRentalInDateRangeDTO from '@modules/rentals/dtos/IFindCarRentalInDateRangeDTO';
 import IFindRentalByDateRangeDTO from '@modules/rentals/dtos/IFindRentalByDateRangeDTO';
+import IMostRentedCarResponseDTO from '@modules/rentals/dtos/IMostRentedCarResponseDTO';
 import Rental from '../entities/Rental';
 
 class RentalsRepository implements IRentalsRepository {
@@ -40,7 +41,7 @@ class RentalsRepository implements IRentalsRepository {
     start_date,
     end_date,
   }: IFindCarRentalInDateRangeDTO): Promise<Rental[]> {
-    const rentals = this.ormRepository
+    const rentals = await this.ormRepository
       .createQueryBuilder()
       .where('car_id = :id', { id: car_id })
       .andWhere('start_date BETWEEN :start AND :end', {
@@ -81,7 +82,7 @@ class RentalsRepository implements IRentalsRepository {
     start_date,
     end_date,
   }: IFindRentalByDateRangeDTO): Promise<Rental[]> {
-    const rentals = this.ormRepository
+    const rentals = await this.ormRepository
       .createQueryBuilder()
       .where('start_date BETWEEN :start AND :end', {
         start: start_date,
@@ -100,6 +101,32 @@ class RentalsRepository implements IRentalsRepository {
       .getMany();
 
     return rentals;
+  }
+
+  public async countAllFromUser(user_id: string): Promise<number> {
+    const totalUserRentals = await this.ormRepository.count({ user_id });
+
+    return totalUserRentals;
+  }
+
+  public async findUserMostRentedCar(
+    user_id: string,
+  ): Promise<IMostRentedCarResponseDTO> {
+    const rentedCars = await this.ormRepository
+      .createQueryBuilder('rentals')
+      .select('rentals.car_id, COUNT(rentals.car_id) as total')
+      .where('rentals.user_id = :id', { id: user_id })
+      .groupBy('rentals.car_id')
+      .orderBy('total', 'DESC')
+      .getRawMany();
+
+    if (rentedCars.length === 0) {
+      return { totalFavoriteRentals: 0, car_id: undefined };
+    }
+
+    const { car_id, total } = rentedCars[0];
+
+    return { totalFavoriteRentals: total, car_id };
   }
 }
 

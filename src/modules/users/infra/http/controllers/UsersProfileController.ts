@@ -5,6 +5,8 @@ import { classToClass } from 'class-transformer';
 import UpdateUserProfileService from '@modules/users/services/UpdateUserProfileService';
 import ShowUserProfileService from '@modules/users/services/ShowUserProfileService';
 
+import CarMapper from '@modules/cars/infra/http/mappers/CarMapper';
+
 export default class ProfileController {
   public async update(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
@@ -38,8 +40,24 @@ export default class ProfileController {
 
     const showUserProfile = container.resolve(ShowUserProfileService);
 
-    const user = await showUserProfile.execute({ user_id });
+    const {
+      user,
+      totalRentals,
+      favoriteRental,
+    } = await showUserProfile.execute({ user_id });
 
-    return response.json(classToClass(user));
+    const convertedUser = classToClass(user);
+    const convertedFavoriteCar = favoriteRental.car
+      ? CarMapper.toDTO(favoriteRental.car)
+      : undefined;
+
+    return response.json({
+      user: convertedUser,
+      totalRentals,
+      favoriteRental: {
+        totalRentals: favoriteRental.totalRentals,
+        car: convertedFavoriteCar,
+      },
+    });
   }
 }

@@ -1,6 +1,7 @@
 import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IFindCarRentalInDateRangeDTO from '../dtos/IFindCarRentalInDateRangeDTO';
 import IFindRentalByDateRangeDTO from '../dtos/IFindRentalByDateRangeDTO';
+import IMostRentedCarResponseDTO from '../dtos/IMostRentedCarResponseDTO';
 import Rental from '../infra/typeorm/entities/Rental';
 
 export default interface IRentalsRepository {
@@ -25,4 +26,8 @@ export default interface IRentalsRepository {
     start_date,
     end_date,
   }: IFindRentalByDateRangeDTO): Promise<Rental[]>;
+
+  countAllFromUser(user_id: string): Promise<number>;
+
+  findUserMostRentedCar(user_id: string): Promise<IMostRentedCarResponseDTO>;
 }

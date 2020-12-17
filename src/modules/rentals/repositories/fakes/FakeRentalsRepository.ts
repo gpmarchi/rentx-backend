@@ -5,6 +5,7 @@ import ICreateRentalDTO from '@modules/rentals/dtos/ICreateRentalDTO';
 import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
 import IFindCarRentalInDateRangeDTO from '@modules/rentals/dtos/IFindCarRentalInDateRangeDTO';
 import IFindRentalByDateRangeDTO from '@modules/rentals/dtos/IFindRentalByDateRangeDTO';
+import IMostRentedCarResponseDTO from '@modules/rentals/dtos/IMostRentedCarResponseDTO';
 import Rental from '../../infra/typeorm/entities/Rental';
 
 class FakeRentalsRepository implements IRentalsRepository {
@@ -102,6 +103,23 @@ class FakeRentalsRepository implements IRentalsRepository {
     );
 
     return rentals;
+  }
+
+  public async countAllFromUser(user_id: string): Promise<number> {
+    const totalUserRentals = this.rentals.reduce((accumulator, rental) => {
+      if (rental.user_id === user_id) {
+        return accumulator + 1;
+      }
+      return accumulator;
+    }, 0);
+
+    return totalUserRentals;
+  }
+
+  public async findUserMostRentedCar(
+    user_id: string,
+  ): Promise<IMostRentedCarResponseDTO> {
+    return { totalFavoriteRentals: 1, car_id: uuidv4() };
   }
 }
 
